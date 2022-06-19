@@ -1,5 +1,4 @@
 import ResponsiveAppBar from "../ResponsiveAppBar";
-import './MyTasks.css';
 
 
 const MyTasks = () => {

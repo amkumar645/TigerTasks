@@ -1,5 +1,4 @@
 import ResponsiveAppBar from "../ResponsiveAppBar";
-import './Tutorial.css';
 
 const Tutorial = () => {
     return (
