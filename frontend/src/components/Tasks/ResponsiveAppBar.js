@@ -13,10 +13,17 @@ import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
 import { NavLink } from 'react-router-dom';
 import Logo from '../../assets/TigerTasks.png';
+import GoogleOut from '../Login/GoogleOut';
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({user}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  var initials = "";
+  if (user.user.name !== "") {
+    const name = user.user.name.split(" ");
+    initials = name[0].charAt(0) + name[1].charAt(0);
+  }
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,10 +39,6 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const handleLogout = () => {
-    alert("Logout");
-  }
 
   return (
     <AppBar position="static" style={{ background: '#4caf50' }}>
@@ -119,7 +122,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar sx={{ bgcolor: "#357a38"}}>AK</Avatar>
+              {initials && <Avatar sx={{ bgcolor: "#357a38"}}>{initials}</Avatar>}
             </IconButton>
             <Menu
               sx={{ mt: '45px' }}
@@ -138,8 +141,8 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                <NavLink exact="true" activeclassname="active" to="/login" onClick={() => handleLogout()} style={{textDecoration: 'none'}}>
-                  <Typography textAlign="center" color="black">Logout</Typography>
+                <NavLink exact="true" activeclassname="active" to="/login" style={{textDecoration: 'none'}}>
+                  <GoogleOut></GoogleOut>
                 </NavLink>
               </MenuItem>
             </Menu>

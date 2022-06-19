@@ -2,9 +2,11 @@ import ResponsiveAppBar from "../ResponsiveAppBar";
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import TaskCard from "./TaskCard";
-import { Container, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import { Navigate } from "react-router-dom";
 
-const Browse = () => {
+const Browse = (user) => {
+    const [redirect, setRedirect] = useState(false);
     const [tasks, setTasks] = useState([])
     const [refreshData, setRefreshData] = useState(false)
     const [changeTask, setChangeTask] = useState({"change": false, "id": 0})
@@ -26,6 +28,9 @@ const Browse = () => {
 
     //gets run at initial loadup
     useEffect(() => {
+        if (user.user.name === "") {
+            setRedirect(true);
+        }
         getAllTasks();
     }, [])
     //refreshes the page
@@ -36,14 +41,15 @@ const Browse = () => {
 
     return (
         <>
-            <ResponsiveAppBar></ResponsiveAppBar>
-            <Typography variant='h2' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50'}}>
+            { redirect ? (<Navigate push to="/login"/>) : null }
+            <ResponsiveAppBar user={user}></ResponsiveAppBar>
+            <Typography variant='h2' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50', fontFamily: 'Raleway'}}>
                 Available Tasks
             </Typography>
             <Grid container spacing={2} sx={{ ml:'auto', mr: 'auto'}}>
                 {tasks != null && tasks.map((task, i) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <TaskCard taskData={task} deleteSingleTask={deleteSingleTask} setChangeTask={setChangeTask}/>
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={i} >
+                        <TaskCard taskData={task} deleteSingleTask={deleteSingleTask} setChangeTask={setChangeTask} user={user}/>
                     </Grid>
                 ))}
             </Grid>

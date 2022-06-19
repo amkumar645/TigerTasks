@@ -7,9 +7,8 @@ import { Box, Chip, IconButton } from '@mui/material';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 
-const TaskCard = ({taskData, deleteTask, setChangeTask}) => {
-    const [flagged, setFlagged] = useState(false)
-
+const TaskCard = ({taskData, deleteTask, setChangeTask, user}) => {
+    const [flagged, setFlagged] = useState(taskData.flaggedby.includes(user.user.netID));
 
     return (
         <Card sx={{ maxWidth: 400, alignItems: 'center' }} variant="outlined">

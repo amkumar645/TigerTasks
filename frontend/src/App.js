@@ -4,15 +4,30 @@ import Browse from './components/Tasks/Browse/Browse';
 import Login from './components/Login/Login';
 import MyTasks from './components/Tasks/MyTasks/MyTasks';
 import Tutorial from './components/Tasks/Tutorial/Tutorial';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [user, setUser] = useState({
+    "name": "",
+    "netID": "", 
+    "email": "", 
+  });
+
+  const setCurrentUser = (currentUser) => {
+    setUser({
+      "name": currentUser[0],
+      "netID": currentUser[1], 
+      "email": currentUser[2],
+    });
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Browse />} />
-        <Route path="/mytasks" element={<MyTasks />} />
-        <Route path="/tutorial" element={<Tutorial />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Browse user={user}/>} />
+        <Route path="/mytasks" element={<MyTasks user={user}/>} />
+        <Route path="/tutorial" element={<Tutorial user={user}/>} />
+        <Route path="/login" element={<Login setUser={setCurrentUser}/>} />
       </Routes>
     </Router>
   );
