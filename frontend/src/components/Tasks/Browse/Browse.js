@@ -2,7 +2,7 @@ import ResponsiveAppBar from "../ResponsiveAppBar";
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import TaskCard from "./TaskCard";
-import { Grid, Typography } from "@mui/material";
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
 
 const Browse = (user) => {
@@ -11,6 +11,8 @@ const Browse = (user) => {
     const [refreshData, setRefreshData] = useState(false)
     const [changeTask, setChangeTask] = useState({"change": false, "id": 0})
     const [addNewTask, setAddNewTask] = useState(false)
+    const [filterTitle, setFilterTitle] = useState('')
+    const [filterCategory, setFilterCategory] = useState('')
     const [newTask, setNewTask] = useState(
         {
             "title": "",
@@ -25,6 +27,45 @@ const Browse = (user) => {
             "flaggedby": []
         }
     )
+    const changeFilterTitle = (event) => {
+        setFilterTitle(event.target.value);
+        if (event.target.value === "") {
+            if (filterCategory === ""){
+                getAllTasks();
+            }
+            else {
+                getAllTasksByCategory(filterCategory);
+            }
+        }
+        else {
+            if (filterCategory === ""){
+                getAllTasksByTitle(event.target.value);
+            }
+            else {
+                getAllTasksByTitleAndCategory(event.target.value, filterCategory);
+            }
+        }
+    };
+
+    const changeFilterCategory = (event) => {
+        setFilterCategory(event.target.value);
+        if (event.target.value === "") {
+            if (filterTitle === ""){
+                getAllTasks();
+            }
+            else {
+                getAllTasksByTitle(filterTitle);
+            }
+        }
+        else {
+            if (filterTitle === ""){
+                getAllTasksByCategory(event.target.value);
+            }
+            else {
+                getAllTasksByTitleAndCategory(filterTitle, event.target.value);
+            }
+        }
+    };
 
     //gets run at initial loadup
     useEffect(() => {
@@ -43,9 +84,33 @@ const Browse = (user) => {
         <>
             { redirect ? (<Navigate push to="/login"/>) : null }
             <ResponsiveAppBar user={user}></ResponsiveAppBar>
-            <Typography variant='h2' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50', fontFamily: 'Raleway'}}>
+            <Typography variant='h3' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50', fontFamily: 'Raleway'}}>
                 Available Tasks
             </Typography>
+            <Box sx={{ textAlign: 'center', mb: 5}}>
+                <TextField
+                    id="search"
+                    label="Search by task title name"
+                    type="search"
+                    variant="outlined"
+                    onChange={changeFilterTitle}
+                    sx={{width: '90%', mb: 3, fontFamily: 'Raleway'}}
+                />
+                <br></br>
+                <FormControl sx={{width: '200px'}}>
+                    <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={filterCategory}
+                        label="Category"
+                        onChange={changeFilterCategory}
+                    >
+                    <MenuItem value={""}>&nbsp;</MenuItem>
+                    <MenuItem value={"Test"}>Test</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
             <Grid container spacing={2} sx={{ ml:'auto', mr: 'auto'}}>
                 {tasks != null && tasks.map((task, i) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={i} >
@@ -93,6 +158,42 @@ const Browse = (user) => {
     // Get all the tasks
     function getAllTasks(){
         var url = "http://localhost:8000/tasks"
+        axios.get(url, {
+            responseType: 'json'
+        }).then(response => {
+            if(response.status === 200){
+                setTasks(response.data)
+            }
+        })
+    }
+
+    // Get all the tasks filtered by category
+    function getAllTasksByCategory(category){
+        var url = "http://localhost:8000/tasks/category/" + category + "/"
+        axios.get(url, {
+            responseType: 'json'
+        }).then(response => {
+            if(response.status === 200){
+                setTasks(response.data)
+            }
+        })
+    }
+
+     // Get all the tasks filtered by category
+     function getAllTasksByTitle(filter){
+        var url = "http://localhost:8000/tasks/title/" + filter + "/"
+        axios.get(url, {
+            responseType: 'json'
+        }).then(response => {
+            if(response.status === 200){
+                setTasks(response.data)
+            }
+        })
+    }
+
+    // Get all the tasks filtered by category
+    function getAllTasksByTitleAndCategory(filter, category){
+        var url = "http://localhost:8000/tasks/search/" + category + "/" + filter;
         axios.get(url, {
             responseType: 'json'
         }).then(response => {

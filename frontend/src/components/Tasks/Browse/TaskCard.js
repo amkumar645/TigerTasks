@@ -23,31 +23,31 @@ const TaskCard = ({taskData, deleteTask, setChangeTask, user}) => {
                 </IconButton>
             </Box>
             <CardContent sx={{textAlign: 'center'}}>
-                <Typography variant="h4" component="div" sx={{ fontWeight: 600, mt:-1, mb: 1, textAlign:'center'}}>
+                <Typography variant="h4" component="div" sx={{ fontWeight: 600, mt:-1, mb: 1, textAlign:'center', fontFamily: 'Raleway'}}>
                     { taskData !== undefined && taskData.title}
                 </Typography>
-                <Chip label={taskData.category} color="primary" sx={{ mb: 1, fontSize: '16px'}}/>
+                <Chip label={taskData.category} color="primary" sx={{ mb: 1, fontSize: '16px', fontFamily: 'Raleway'}}/>
                 <hr></hr>
-                <Typography variant="body1" sx={{ mt: 2}}>
+                <Typography variant="body1" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     { taskData !== undefined && taskData.description}
                 </Typography>
                 <hr></hr>
-                <Typography variant="body2" sx={{ mt: 2}}>
+                <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                    <b>Price:</b> ${ taskData !== undefined && taskData.price}
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 2}}>
+                <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     <b>Skills Required:</b> { taskData !== undefined && taskData.skills}
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 2}}>
+                <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     <b>Deadline:</b> { taskData !== undefined && taskData.deadline}
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 2}}>
+                <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     <b>Created By:</b> { taskData !== undefined && taskData.createdby}
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 2}}>
+                <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     <b>Contact Email:</b> { taskData !== undefined && taskData.email}
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 2}}>
+                <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     <b>Contact Phone Number:</b> { taskData !== undefined && taskData.phone}
                 </Typography>
             </CardContent>

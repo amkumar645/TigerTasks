@@ -78,17 +78,17 @@ const ResponsiveAppBar = ({user}) => {
             >
               <MenuItem onClick={handleCloseNavMenu}>
                 <NavLink exact="true" activeclassname="active" to="/" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
-                  <Typography textAlign="center" color="black">Browse Tasks</Typography>
+                  <Typography textAlign="center" color="black" sx={{ fontFamily: 'Raleway' }}>Browse Tasks</Typography>
                 </NavLink>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <NavLink exact="true" activeclassname="active" to="/mytasks" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
-                  <Typography textAlign="center" color="black">My Tasks</Typography>
+                  <Typography textAlign="center" color="black" sx={{ fontFamily: 'Raleway' }}>My Tasks</Typography>
                 </NavLink>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <NavLink exact="true" activeclassname="active" to="/tutorial" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
-                  <Typography textAlign="center" color="black">Tutorial</Typography>
+                  <Typography textAlign="center" color="black" sx={{ fontFamily: 'Raleway' }}>Tutorial</Typography>
                 </NavLink>
               </MenuItem>
             </Menu>
@@ -97,7 +97,7 @@ const ResponsiveAppBar = ({user}) => {
             <NavLink exact="true" activeclassname="active" to="/" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ mt: 2.3, mb: 1.7, color: 'white', display: 'block', mr: 3, ml: 5}}
+                sx={{ mt: 2.3, mb: 1.7, color: 'white', display: 'block', mr: 3, ml: 5, fontFamily: 'Raleway', fontSize: '16px'}}
               >
                 Browse Tasks
               </Button>
@@ -105,7 +105,7 @@ const ResponsiveAppBar = ({user}) => {
             <NavLink exact="true" activeclassname="active" to="/mytasks" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ mt: 2.3, color: 'white', display: 'block', mr: 3}}
+                sx={{ mt: 2.3, color: 'white', display: 'block', mr: 3, fontFamily: 'Raleway', fontSize: '16px'}}
               >
                 My Tasks
               </Button>
@@ -113,7 +113,7 @@ const ResponsiveAppBar = ({user}) => {
             <NavLink exact="true" activeclassname="active" to="/tutorial" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ mt: 2.3, color: 'white', display: 'block', mr: 3}}
+                sx={{ mt: 2.3, color: 'white', display: 'block', mr: 3, fontFamily: 'Raleway', fontSize: '16px'}}
               >
                 Tutorial
               </Button>
@@ -125,7 +125,7 @@ const ResponsiveAppBar = ({user}) => {
               {initials && <Avatar sx={{ bgcolor: "#357a38"}}>{initials}</Avatar>}
             </IconButton>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '45px', fontFamily: 'Raleway' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
