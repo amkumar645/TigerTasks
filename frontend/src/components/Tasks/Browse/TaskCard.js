@@ -7,15 +7,55 @@ import { Box, Chip, IconButton } from '@mui/material';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 
-const TaskCard = ({taskData, deleteTask, setChangeTask, user}) => {
+const TaskCard = ({taskData, deleteTask, user, flagTask}) => {
     const [flagged, setFlagged] = useState(taskData.flaggedby.includes(user.user.netID));
 
+    const flagThisTask = (flagging) => {
+        setFlagged(!flagged);
+        if (flagging) {
+            const newFlaggedBy = taskData.flaggedby;
+            newFlaggedBy.push(user.user.netID)
+            const data = {
+                "title": taskData.title,
+                "description": taskData.description, 
+                "skills": taskData.skills, 
+                "category": taskData.category,
+                "price": taskData.price,
+                "deadline": taskData.deadline,
+                "email": taskData.email,
+                "phone": taskData.phone,
+                "createdby": taskData.createdby,
+                "flaggedby": newFlaggedBy
+            }
+            flagTask(data, taskData._id);
+        }
+        else {
+            const newFlaggedBy = taskData.flaggedby;
+            const index = newFlaggedBy.indexOf(user.user.netID);
+            if (index > -1) {
+                newFlaggedBy.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            const data = {
+                "title": taskData.title,
+                "description": taskData.description, 
+                "skills": taskData.skills, 
+                "category": taskData.category,
+                "price": taskData.price,
+                "deadline": taskData.deadline,
+                "email": taskData.email,
+                "phone": taskData.phone,
+                "createdby": taskData.createdby,
+                "flaggedby": newFlaggedBy
+            }
+            flagTask(data, taskData._id);
+        }
+    }
     return (
         <Card sx={{ maxWidth: 400, alignItems: 'center' }} variant="outlined">
             <Box sx={{textAlign:"right"}}>
                 <IconButton
                         size="large"
-                        onClick={() => setFlagged(!flagged)}
+                        onClick={() => flagThisTask(!flagged)}
                         sx={{color: "red"}}
                 >
                     {!flagged && <FlagOutlinedIcon></FlagOutlinedIcon>}
@@ -57,12 +97,5 @@ const TaskCard = ({taskData, deleteTask, setChangeTask, user}) => {
             </CardActions>
         </Card>
     );
-
-    function changeTask(){
-        setChangeTask({
-            "change": true,
-            "id": taskData._id
-        })
-    }
 }
 export default TaskCard;

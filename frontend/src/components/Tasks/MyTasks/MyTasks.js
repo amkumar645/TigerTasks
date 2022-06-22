@@ -5,6 +5,7 @@ import axios from "axios";
 import { Box, Typography } from "@mui/material";
 import TaskAccordion from './TaskAccordion.js';
 import FlaggedTaskAccordion from "./FlaggedTaskAccordion";
+import { restURL } from "../../utils/constants";
 
 
 
@@ -63,7 +64,7 @@ const MyTasks = (user) => {
 
     // Get all the tasks created by user
     function getAllCreatedTasks(){
-        var url = "http://localhost:8000/users/created/" + user.user.netID;
+        var url = restURL + "/users/created/" + user.user.netID;
         axios.get(url, {
             responseType: 'json'
         }).then(response => {
@@ -75,7 +76,7 @@ const MyTasks = (user) => {
 
     // Get all the tasks
     function getAllFlaggedTasks(){
-        var url = "http://localhost:8000/users/flagged/" + user.user.netID;
+        var url = restURL + "/users/flagged/" + user.user.netID;
         axios.get(url, {
             responseType: 'json'
         }).then(response => {
@@ -87,7 +88,7 @@ const MyTasks = (user) => {
 
     // Delete Single Task
     function deleteSingleTask(id){
-        var url = "http://localhost:8000/task/delete/" + id
+        var url = restURL + "/task/delete/" + id
         axios.delete(url, {
         }).then(response => {
             if(response.status === 200){
