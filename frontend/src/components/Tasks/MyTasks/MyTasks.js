@@ -14,12 +14,37 @@ const MyTasks = (user) => {
     const [createdTasks, setCreatedTasks] = useState([])
     const [flaggedTasks, setFlaggedTasks] = useState([])
     const [refreshData, setRefreshData] = useState(false)
-    const [changeTask, setChangeTask] = useState({"change": false, "id": 0})
-    const [expanded, setExpanded] = useState(false);
 
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
+    var newTask = {
+        "title": "",
+        "description": "", 
+        "skills": "", 
+        "category": "",
+        "price": 0,
+        "deadline": "",
+        "email": user.user.email,
+        "phone": "",
+        "createdby": user.user.netID,
+        "flaggedby": []
     };
+    var changeTaskId = 0;
+
+    const flagTask = (data, id) => {
+        newTask = {
+            "title": data.title,
+            "description": data.description, 
+            "skills": data.skills, 
+            "category": data.category,
+            "price": data.price,
+            "deadline": data.deadline,
+            "email": data.email,
+            "phone": data.phone,
+            "createdby": data.createdby,
+            "flaggedby": data.flaggedby
+        }
+        changeTaskId = id;
+        changeSingleTask();
+    }
     
     //gets run at initial loadup
     useEffect(() => {
@@ -46,7 +71,7 @@ const MyTasks = (user) => {
             </Typography>
             <Box sx={{ml: 5, mr: 5}}>
                 {createdTasks != null && createdTasks.map((task, i) => (
-                    <TaskAccordion key={i} taskData={task} deleteSingleTask={deleteSingleTask} setChangeTask={setChangeTask} user={user}/>
+                    <TaskAccordion key={i} taskData={task} deleteSingleTask={deleteSingleTask} user={user}/>
                 ))}
             </Box>
             
@@ -55,10 +80,10 @@ const MyTasks = (user) => {
             </Typography>
             <Box sx={{ml: 5, mr: 5, mb: 5}}>
                 {flaggedTasks != null && flaggedTasks.map((task, i) => (
-                    <FlaggedTaskAccordion key={i} taskData={task} deleteSingleTask={deleteSingleTask} setChangeTask={setChangeTask} user={user}/>
+                    <FlaggedTaskAccordion key={i} taskData={task} flagTask={flagTask} user={user}/>
                 ))}
             </Box>
-            
+
         </>
     )
 
@@ -95,6 +120,31 @@ const MyTasks = (user) => {
                 setRefreshData(true)
             }
         })
+    }
+
+
+    // Change a task
+    function changeSingleTask(){
+        var url = restURL + "/task/update/" + changeTaskId;
+        axios.put(url, newTask)
+            .then(response => {
+            if(response.status === 200){
+                setRefreshData(true)
+            }
+        })
+        newTask = {
+            "title": "",
+            "description": "", 
+            "skills": "", 
+            "category": "",
+            "price": 0,
+            "deadline": "",
+            "email": user.user.email,
+            "phone": "",
+            "createdby": user.user.netID,
+            "flaggedby": []
+        };
+        changeTaskId = 0;
     }
 }
 

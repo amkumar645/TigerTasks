@@ -7,7 +7,7 @@ import { Box, Chip, IconButton } from '@mui/material';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 
-const TaskCard = ({taskData, deleteTask, user, flagTask}) => {
+const TaskCard = ({taskData, user, flagTask}) => {
     const [flagged, setFlagged] = useState(taskData.flaggedby.includes(user.user.netID));
 
     const flagThisTask = (flagging) => {
@@ -92,8 +92,6 @@ const TaskCard = ({taskData, deleteTask, user, flagTask}) => {
                 </Typography>
             </CardContent>
             <CardActions sx={{display: 'inline'}}>
-                {/* <Button variant="contained" size="small" sx={{backgroundColor: '#357a38', mb: 2}}>See More</Button>
-                <Button variant="contained" size="small" sx={{backgroundColor: '#aa2e25', mb: 2}}>Flag</Button> */}
             </CardActions>
         </Card>
     );

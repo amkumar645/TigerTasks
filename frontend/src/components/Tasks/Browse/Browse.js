@@ -2,7 +2,7 @@ import ResponsiveAppBar from "../ResponsiveAppBar";
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import TaskCard from "./TaskCard";
-import { Box, Button, Dialog, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Box, Container, Button, Dialog, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { restURL } from "../../utils/constants";
 import AddDialog from "./AddDialog/AddDialog";
@@ -146,18 +146,28 @@ const Browse = (user) => {
                         label="Category"
                         onChange={changeFilterCategory}
                     >
-                    <MenuItem value={""}>&nbsp;</MenuItem>
-                    <MenuItem value={"Test"}>Test</MenuItem>
+                    <MenuItem value="">&nbsp;</MenuItem>
+                    <MenuItem value="Art">Art</MenuItem>
+                    <MenuItem value="Tech">Tech</MenuItem>
+                    <MenuItem value="Food">Food</MenuItem>
+                    <MenuItem value="Shopping">Shopping</MenuItem>
+                    <MenuItem value="Transportation">Transportation</MenuItem>
+                    <MenuItem value="Activity">Activity</MenuItem>
+                    <MenuItem value="Tutoring">Tutoring</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
                     </Select>
                 </FormControl>
             </Box>
+            <Box sx={{ ml:'auto', mr: 'auto', width: '90%', mb: 5}}>
             <Grid container spacing={2} sx={{ ml:'auto', mr: 'auto'}}>
                 {tasks != null && tasks.reverse().map((task, i) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={i} >
-                        <TaskCard taskData={task} deleteSingleTask={deleteSingleTask} flagTask={flagTask} user={user}/>
+                        <TaskCard taskData={task} flagTask={flagTask} user={user}/>
                     </Grid>
                 ))}
             </Grid>
+            </Box>
+            
         </>
     );
 
@@ -262,17 +272,6 @@ const Browse = (user) => {
         }).then(response => {
             if(response.status === 200){
                 setTasks(response.data)
-            }
-        })
-    }
-
-    // Delete Single Task
-    function deleteSingleTask(id){
-        var url = restURL + "/task/delete/" + id
-        axios.delete(url, {
-        }).then(response => {
-            if(response.status === 200){
-                setRefreshData(true)
             }
         })
     }
