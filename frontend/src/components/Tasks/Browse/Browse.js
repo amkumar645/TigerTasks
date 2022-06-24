@@ -2,10 +2,13 @@ import ResponsiveAppBar from "../ResponsiveAppBar";
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import TaskCard from "./TaskCard";
-import { Box, Container, Button, Dialog, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { restURL } from "../../utils/constants";
 import AddDialog from "./AddDialog/AddDialog";
+import SuccessDialog from "../Dialogs/SuccessDialog";
+import ErrorDialog from "../Dialogs/ErrorDialog";
+
 
 const Browse = (user) => {
     const [redirect, setRedirect] = useState(false);
@@ -14,6 +17,9 @@ const Browse = (user) => {
     const [filterTitle, setFilterTitle] = useState('')
     const [filterCategory, setFilterCategory] = useState('')
     const [openDialog, setOpenDialog] = useState(false);
+    const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+    const [openErrorDialog, setOpenErrorDialog] = useState(false);
+
     var newTask = {
         "title": "",
         "description": "", 
@@ -115,7 +121,7 @@ const Browse = (user) => {
     }
 
     return (
-        <>
+        <Box>
             { redirect ? (<Navigate push to="/login"/>) : null }
             <ResponsiveAppBar user={user}></ResponsiveAppBar>
             <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="lg">
@@ -134,10 +140,10 @@ const Browse = (user) => {
                     type="search"
                     variant="outlined"
                     onChange={changeFilterTitle}
-                    sx={{width: '90%', mb: 3, fontFamily: 'Raleway'}}
+                    sx={{width: '90%', mb: 3, fontFamily: 'Raleway', backgroundColor: "#f5f5f5"}}
                 />
                 <br></br>
-                <FormControl sx={{width: '200px'}}>
+                <FormControl sx={{width: '200px', backgroundColor: "#f5f5f5"}}>
                     <InputLabel id="demo-simple-select-label">Category</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -167,8 +173,13 @@ const Browse = (user) => {
                 ))}
             </Grid>
             </Box>
-            
-        </>
+            <Dialog open={openSuccessDialog} onClose={() => setOpenSuccessDialog(false)} fullWidth maxWidth="sm">
+                <SuccessDialog closeSuccessDialog={setOpenSuccessDialog} message={"Task successfully added!"}></SuccessDialog>
+            </Dialog>
+            <Dialog open={openErrorDialog} onClose={() => setOpenErrorDialog(false)} fullWidth maxWidth="sm">
+                <ErrorDialog closeErrorDialog={setOpenErrorDialog} message={"There was an error. Please try again!"}></ErrorDialog>
+            </Dialog>
+        </Box>
     );
 
     // Change a task
@@ -211,7 +222,11 @@ const Browse = (user) => {
             "flaggedby": []
         }).then(response => {
             if(response.status === 200){
-                setRefreshData(true)
+                setRefreshData(true);
+                setOpenSuccessDialog(true);
+            }
+            else {
+                setOpenErrorDialog(true);
             }
         })
         newTask = {

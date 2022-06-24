@@ -1,4 +1,4 @@
-import { Box, Button, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, Input, InputLabel, MenuItem, Select, TextareaAutosize, TextField } from "@mui/material";
+import { Box, Button, DialogActions, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -157,8 +157,12 @@ const AddDialog = ({closeAddDialog, formSubmit}) => {
                 )}
             />
             <DialogActions sx={{textAlign: 'center'}}>
-                <Button type="submit" color="primary" variant="contained">Create</Button>
-                <Button color="error" variant="contained" onClick={() => closeAddDialog(false)}>Cancel</Button>
+                <Grid container justify="center">    
+                    <Grid item xs={12} sx={{mb: 3, mt: 3}}>
+                        <Button sx={{mr: 3}} type="submit" color="primary" variant="contained">Create</Button>
+                        <Button color="error" variant="contained" onClick={() => closeAddDialog(false)}>Cancel</Button>
+                    </Grid>
+                </Grid>
             </DialogActions>
         </Box>
     );

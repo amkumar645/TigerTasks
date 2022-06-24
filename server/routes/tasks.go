@@ -93,7 +93,7 @@ func GetTasksByTitle(c *gin.Context) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	var tasks []bson.M
 	cursor, err := taskCollection.Find(ctx, bson.M{
-		"title": bson.M{"$regex": filter},
+		"title": bson.M{"$regex": filter, "$options": "im"},
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -115,7 +115,7 @@ func GetTasksByTitleAndCategory(c *gin.Context) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	var tasks []bson.M
 	cursor, err := taskCollection.Find(ctx, bson.M{
-		"title":    bson.M{"$regex": filter},
+		"title":    bson.M{"$regex": filter, "$options": "im"},
 		"category": category,
 	})
 	if err != nil {

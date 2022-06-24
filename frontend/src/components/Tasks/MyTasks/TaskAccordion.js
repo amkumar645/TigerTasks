@@ -5,12 +5,14 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button, Chip, Dialog, Typography } from "@mui/material";
 import DeleteDialog from './Dialogs/DeleteDialog';
+import EditDialog from './Dialogs/EditDialog';
+import CategoryChip from '../CategoryChip/CategoryChip';
 
 
-const TaskAccordion = ({taskData, deleteSingleTask, setChangeTask, user}) => {
+const TaskAccordion = ({taskData, deleteSingleTask, formSubmit}) => {
     const [expanded, setExpanded] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
+    const [openEditDialog, setOpenEditDialog] = useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -19,7 +21,7 @@ const TaskAccordion = ({taskData, deleteSingleTask, setChangeTask, user}) => {
     return (
         <>
 
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} >
+        <Accordion sx={{backgroundColor: "#f5f5f5"}} expanded={expanded === 'panel1'} onChange={handleChange('panel1')} >
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
@@ -29,9 +31,10 @@ const TaskAccordion = ({taskData, deleteSingleTask, setChangeTask, user}) => {
                 sx={{ width: '33%', flexShrink: 0, fontFamily: 'Raleway', fontWeight:600 }}>
                     { taskData !== undefined && taskData.title}                   
                 </Typography>
-                <Chip label={taskData.category} color="primary" 
-                    sx={{ mr: '30%', mb: 1, fontSize: '16px', fontFamily: 'Raleway'}}/>
-                <Typography sx={{ width: '33%', flexShrink: 0, fontFamily: 'Raleway' }}>
+                <Box sx={{mr: '30%'}}>
+                    <CategoryChip category={taskData.category}></CategoryChip>
+                </Box>
+                <Typography sx={{ fontFamily: 'Raleway', position: 'absolute', right: '1%', width: '33%' }}>
                     <b>Created By:&nbsp;</b> { taskData !== undefined && taskData.createdby}                   
                 </Typography>
             </AccordionSummary>
@@ -59,7 +62,7 @@ const TaskAccordion = ({taskData, deleteSingleTask, setChangeTask, user}) => {
                     <b>Contact Phone Number:</b> { taskData !== undefined && taskData.phone}
                 </Typography>
                 <Box sx={{textAlign: 'center', mt: 5}}>
-                    <Button variant="contained" color="primary" size="small" sx={{ mb: 2, mr: 3}}>Edit</Button>
+                    <Button variant="contained" color="primary" size="small" sx={{ mb: 2, mr: 3}} onClick={() => setOpenEditDialog(true)}>Edit</Button>
                     <Button variant="contained" color="error" size="small" sx={{ mb: 2}} onClick={() => setOpenDeleteDialog(true)}>Delete</Button>
                 </Box>
             </AccordionDetails>
@@ -67,8 +70,11 @@ const TaskAccordion = ({taskData, deleteSingleTask, setChangeTask, user}) => {
         <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)} fullWidth maxWidth="sm">
             <DeleteDialog deleteSingleTask={deleteSingleTask} id={taskData._id} closeDeleteDialog={setOpenDeleteDialog}></DeleteDialog>
         </Dialog>
+        <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} fullWidth maxWidth="lg">
+            <EditDialog closeEditDialog={setOpenEditDialog} formSubmit={formSubmit} taskData={taskData}></EditDialog>
+        </Dialog>
         </>
-    )
+    );
 }
 
 export default TaskAccordion;

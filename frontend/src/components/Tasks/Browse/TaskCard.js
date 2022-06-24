@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Box, Chip, IconButton } from '@mui/material';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
+import CategoryChip from '../CategoryChip/CategoryChip';
 
 const TaskCard = ({taskData, user, flagTask}) => {
     const [flagged, setFlagged] = useState(taskData.flaggedby.includes(user.user.netID));
@@ -51,7 +52,7 @@ const TaskCard = ({taskData, user, flagTask}) => {
         }
     }
     return (
-        <Card sx={{ maxWidth: 400, alignItems: 'center' }} variant="outlined">
+        <Card sx={{ maxWidth: 400, alignItems: 'center', backgroundColor: "#f5f5f5" }} variant="outlined">
             <Box sx={{textAlign:"right"}}>
                 <IconButton
                         size="large"
@@ -66,7 +67,7 @@ const TaskCard = ({taskData, user, flagTask}) => {
                 <Typography variant="h4" component="div" sx={{ fontWeight: 600, mt:-1, mb: 1, textAlign:'center', fontFamily: 'Raleway'}}>
                     { taskData !== undefined && taskData.title}
                 </Typography>
-                <Chip label={taskData.category} color="primary" sx={{ mb: 1, fontSize: '16px', fontFamily: 'Raleway'}}/>
+                <CategoryChip category={taskData.category}></CategoryChip>
                 <hr></hr>
                 <Typography variant="body1" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     { taskData !== undefined && taskData.description}

@@ -5,6 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button, Chip, Dialog, Typography } from "@mui/material";
 import ViewDialog from './Dialogs/ViewDialog';
+import CategoryChip from '../CategoryChip/CategoryChip';
 
 
 const FlaggedTaskAccordion = ({taskData, user, flagTask}) => {
@@ -17,25 +18,8 @@ const FlaggedTaskAccordion = ({taskData, user, flagTask}) => {
     };
 
     const flagThisTask = (flagging) => {
-        setFlagged(!flagged);
-        if (flagging) {
-            const newFlaggedBy = taskData.flaggedby;
-            newFlaggedBy.push(user.user.netID)
-            const data = {
-                "title": taskData.title,
-                "description": taskData.description, 
-                "skills": taskData.skills, 
-                "category": taskData.category,
-                "price": taskData.price,
-                "deadline": taskData.deadline,
-                "email": taskData.email,
-                "phone": taskData.phone,
-                "createdby": taskData.createdby,
-                "flaggedby": newFlaggedBy
-            }
-            flagTask(data, taskData._id);
-        }
-        else {
+        setFlagged(false);
+        if (!flagging) {
             const newFlaggedBy = taskData.flaggedby;
             const index = newFlaggedBy.indexOf(user.user.netID);
             if (index > -1) {
@@ -59,7 +43,7 @@ const FlaggedTaskAccordion = ({taskData, user, flagTask}) => {
 
     return (
         <>
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} >
+        <Accordion sx={{backgroundColor: "#f5f5f5"}} expanded={expanded === 'panel1'} onChange={handleChange('panel1')} >
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
@@ -69,9 +53,10 @@ const FlaggedTaskAccordion = ({taskData, user, flagTask}) => {
                 sx={{ width: '33%', flexShrink: 0, fontFamily: 'Raleway', fontWeight:600 }}>
                     { taskData !== undefined && taskData.title}                   
                 </Typography>
-                <Chip label={taskData.category} color="primary" 
-                    sx={{ mr: '30%', mb: 1, fontSize: '16px', fontFamily: 'Raleway'}}/>
-                <Typography sx={{ width: '33%', flexShrink: 0, fontFamily: 'Raleway' }}>
+                <Box sx={{mr: '30%'}}>
+                    <CategoryChip category={taskData.category}></CategoryChip>
+                </Box>
+                <Typography sx={{ fontFamily: 'Raleway', position: 'absolute', right: '1%', width: '33%' }}>
                     <b>Created By:&nbsp;</b> { taskData !== undefined && taskData.createdby}                   
                 </Typography>
             </AccordionSummary>
@@ -100,8 +85,7 @@ const FlaggedTaskAccordion = ({taskData, user, flagTask}) => {
                 </Typography>
                 <Box sx={{textAlign: 'center', mt: 5}}>
                     <Button variant="contained" color="primary" size="small" sx={{ mb: 2, mr: 3}} onClick={() => setOpenFlagDialog(true)}>View</Button>
-                    {flagged && <Button variant="contained" color="error" size="small" sx={{ mb: 2}} onClick={() => flagThisTask(!flagged)}>Unflag</Button>}
-                    {!flagged && <Button color="error" size="small" sx={{ mb: 2}} onClick={() => flagThisTask(!flagged)}>Flag</Button>}
+                    <Button variant="contained" color="error" size="small" sx={{ mb: 2}} onClick={() => flagThisTask(false)}>Unflag</Button>
                 </Box>
             </AccordionDetails>
         </Accordion>

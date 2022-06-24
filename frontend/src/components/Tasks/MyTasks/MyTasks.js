@@ -2,11 +2,12 @@ import ResponsiveAppBar from "../ResponsiveAppBar";
 import React, {useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import axios from "axios";
-import { Box, Typography } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import TaskAccordion from './TaskAccordion.js';
 import FlaggedTaskAccordion from "./FlaggedTaskAccordion";
 import { restURL } from "../../utils/constants";
-
+import SuccessDialog from "../Dialogs/SuccessDialog";
+import ErrorDialog from "../Dialogs/ErrorDialog";
 
 
 const MyTasks = (user) => {
@@ -14,6 +15,8 @@ const MyTasks = (user) => {
     const [createdTasks, setCreatedTasks] = useState([])
     const [flaggedTasks, setFlaggedTasks] = useState([])
     const [refreshData, setRefreshData] = useState(false)
+    const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+    const [openErrorDialog, setOpenErrorDialog] = useState(false);
 
     var newTask = {
         "title": "",
@@ -45,6 +48,23 @@ const MyTasks = (user) => {
         changeTaskId = id;
         changeSingleTask();
     }
+
+    const formSubmit = (data, id) => {
+        newTask = {
+            "title": data.title,
+            "description": data.description, 
+            "skills": data.skills, 
+            "category": data.category,
+            "price": parseFloat(data.price),
+            "deadline": data.deadline,
+            "email": user.user.email,
+            "phone": data.phone,
+            "createdby": user.user.netID,
+            "flaggedby": []
+        }
+        changeTaskId = id;
+        changeSingleTask();
+    }
     
     //gets run at initial loadup
     useEffect(() => {
@@ -63,7 +83,7 @@ const MyTasks = (user) => {
     }
 
     return (
-        <>
+        <Box>
             { redirect ? (<Navigate push to="/login"/>) : null }
             <ResponsiveAppBar user={user}></ResponsiveAppBar>
             <Typography variant='h3' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50', fontFamily: 'Raleway'}}>
@@ -71,7 +91,7 @@ const MyTasks = (user) => {
             </Typography>
             <Box sx={{ml: 5, mr: 5}}>
                 {createdTasks != null && createdTasks.map((task, i) => (
-                    <TaskAccordion key={i} taskData={task} deleteSingleTask={deleteSingleTask} user={user}/>
+                    <TaskAccordion key={i} taskData={task} deleteSingleTask={deleteSingleTask} user={user} formSubmit={formSubmit}/>
                 ))}
             </Box>
             
@@ -83,8 +103,13 @@ const MyTasks = (user) => {
                     <FlaggedTaskAccordion key={i} taskData={task} flagTask={flagTask} user={user}/>
                 ))}
             </Box>
-
-        </>
+            <Dialog open={openSuccessDialog} onClose={() => setOpenSuccessDialog(false)} fullWidth maxWidth="sm">
+                <SuccessDialog closeSuccessDialog={setOpenSuccessDialog} message={"The operation was successful!"}></SuccessDialog>
+            </Dialog>
+            <Dialog open={openErrorDialog} onClose={() => setOpenErrorDialog(false)} fullWidth maxWidth="sm">
+                <ErrorDialog closeErrorDialog={setOpenErrorDialog} message={"There was an error. Please try again!"}></ErrorDialog>
+            </Dialog>
+        </Box>
     )
 
     // Get all the tasks created by user
@@ -117,7 +142,11 @@ const MyTasks = (user) => {
         axios.delete(url, {
         }).then(response => {
             if(response.status === 200){
-                setRefreshData(true)
+                setRefreshData(true);
+                setOpenSuccessDialog(true);
+            }
+            else {
+                setOpenErrorDialog(true);
             }
         })
     }
@@ -129,7 +158,11 @@ const MyTasks = (user) => {
         axios.put(url, newTask)
             .then(response => {
             if(response.status === 200){
-                setRefreshData(true)
+                setRefreshData(true);
+                setOpenSuccessDialog(true);
+            }
+            else {
+                setOpenErrorDialog(true);
             }
         })
         newTask = {
