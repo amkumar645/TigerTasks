@@ -166,8 +166,8 @@ const Browse = (user) => {
             </Box>
             <Box sx={{ ml:'auto', mr: 'auto', width: '90%', mb: 5}}>
             <Grid container spacing={2} sx={{ ml:'auto', mr: 'auto'}}>
-                {tasks != null && tasks.reverse().map((task, i) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={i} >
+                {tasks != null && tasks.reverse().map((task) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={task._id}>
                         <TaskCard taskData={task} flagTask={flagTask} user={user}/>
                     </Grid>
                 ))}

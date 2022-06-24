@@ -91,7 +91,7 @@ const MyTasks = (user) => {
             </Typography>
             <Box sx={{ml: 5, mr: 5}}>
                 {createdTasks != null && createdTasks.map((task, i) => (
-                    <TaskAccordion key={i} taskData={task} deleteSingleTask={deleteSingleTask} user={user} formSubmit={formSubmit}/>
+                    <TaskAccordion key={task._id} taskData={task} deleteSingleTask={deleteSingleTask} user={user} formSubmit={formSubmit}/>
                 ))}
             </Box>
             
@@ -100,7 +100,7 @@ const MyTasks = (user) => {
             </Typography>
             <Box sx={{ml: 5, mr: 5, mb: 5}}>
                 {flaggedTasks != null && flaggedTasks.map((task, i) => (
-                    <FlaggedTaskAccordion key={i} taskData={task} flagTask={flagTask} user={user}/>
+                    <FlaggedTaskAccordion key={task._id} taskData={task} flagTask={flagTask} user={user}/>
                 ))}
             </Box>
             <Dialog open={openSuccessDialog} onClose={() => setOpenSuccessDialog(false)} fullWidth maxWidth="sm">
