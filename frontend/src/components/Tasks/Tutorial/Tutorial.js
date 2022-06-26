@@ -34,7 +34,9 @@ const Tutorial = (user) => {
                     </Typography>
                     <Typography sx={{mt: 2, ml: 10, mr: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
                         2. Browse through the available tasks. They're sorted by most 
-                        recently created to least recently created.
+                        recently created to least recently created. For any tasks with
+                        long descriptions, you can press the SEE MORE button at the 
+                        bottom of the task card to get a popup with the full task info.
                     </Typography>
                     <Typography sx={{mt: 2, ml: 10, mr: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
                         3. Try out the different filtering methods! You can

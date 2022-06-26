@@ -15,7 +15,7 @@ const ViewDialog = ({closeViewDialog, taskData}) => {
                     <Typography sx={{ mb: 1, fontSize: '20px', fontFamily: 'Raleway', fontWeight: 600}}><u>Task Category</u></Typography>
                     <Typography sx={{ fontSize: '20px', fontFamily: 'Raleway', fontWeight: 400}}>{taskData.category}</Typography>
                 </Grid>
-                <Grid item xs={6} sx={{mb: 3}}>
+                <Grid item xs={12} sx={{mb: 3}}>
                     <Typography sx={{ mb: 1, fontSize: '20px', fontFamily: 'Raleway', fontWeight: 600}}><u>Task Description</u></Typography>
                     <Typography sx={{ fontSize: '20px', fontFamily: 'Raleway', fontWeight: 400}}>{taskData.description}</Typography>
                 </Grid>
@@ -39,7 +39,7 @@ const ViewDialog = ({closeViewDialog, taskData}) => {
                     <Typography sx={{ mb: 1, fontSize: '20px', fontFamily: 'Raleway', fontWeight: 600}}><u>Created By</u></Typography>
                     <Typography sx={{ fontSize: '20px', fontFamily: 'Raleway', fontWeight: 400}}>{taskData.createdby}</Typography>
                 </Grid>
-                <Grid item xs={12} sx={{mb: 3}}>
+                <Grid item xs={6} sx={{mb: 3}}>
                     <Typography sx={{ mb: 1, fontSize: '20px', fontFamily: 'Raleway', fontWeight: 600}}><u>Deadline</u></Typography>
                     <Typography sx={{ fontSize: '20px', fontFamily: 'Raleway', fontWeight: 400}}>{taskData.deadline}</Typography>
                 </Grid>

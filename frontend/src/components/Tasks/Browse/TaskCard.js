@@ -3,13 +3,15 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Box, Chip, IconButton } from '@mui/material';
+import { Box, Button, Chip, Dialog, Grid, IconButton } from '@mui/material';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 import CategoryChip from '../CategoryChip/CategoryChip';
+import ViewDialog from '../MyTasks/Dialogs/ViewDialog';
 
 const TaskCard = ({taskData, user, flagTask}) => {
     const [flagged, setFlagged] = useState(taskData.flaggedby.includes(user.user.netID));
+    const [openViewDialog, setOpenViewDialog] = useState(false);
 
     const flagThisTask = (flagging) => {
         setFlagged(!flagged);
@@ -52,6 +54,7 @@ const TaskCard = ({taskData, user, flagTask}) => {
         }
     }
     return (
+        <>
         <Card sx={{ maxWidth: 400, alignItems: 'center', backgroundColor: "#f5f5f5" }} variant="outlined">
             <Box sx={{textAlign:"right"}}>
                 <IconButton
@@ -69,9 +72,12 @@ const TaskCard = ({taskData, user, flagTask}) => {
                 </Typography>
                 <CategoryChip category={taskData.category}></CategoryChip>
                 <hr></hr>
-                <Typography variant="body1" sx={{ mt: 2, fontFamily: 'Raleway'}}>
+                { taskData.description.length <= 100 && <Typography variant="body1" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     { taskData !== undefined && taskData.description}
-                </Typography>
+                </Typography>}
+                { taskData.description.length > 100 && <Typography variant="body1" sx={{ mt: 2, fontFamily: 'Raleway'}}>
+                    { taskData !== undefined && taskData.description.substring(0, 100)}...
+                </Typography>}
                 <hr></hr>
                 <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                    <b>Price:</b> ${ taskData !== undefined && taskData.price}
@@ -91,10 +97,13 @@ const TaskCard = ({taskData, user, flagTask}) => {
                 <Typography variant="body2" sx={{ mt: 2, fontFamily: 'Raleway'}}>
                     <b>Contact Phone Number:</b> { taskData !== undefined && taskData.phone}
                 </Typography>
+                <Button color="primary" size="small" sx={{ mt: 3 }} onClick={() => setOpenViewDialog(true)}>SEE MORE</Button>
             </CardContent>
-            <CardActions sx={{display: 'inline'}}>
-            </CardActions>
         </Card>
+        <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
+            <ViewDialog taskData={taskData} closeViewDialog={setOpenViewDialog}></ViewDialog>
+        </Dialog>
+        </>
     );
 }
 export default TaskCard;

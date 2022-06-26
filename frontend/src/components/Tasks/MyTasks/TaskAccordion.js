@@ -62,8 +62,8 @@ const TaskAccordion = ({taskData, deleteSingleTask, formSubmit}) => {
                     <b>Contact Phone Number:</b> { taskData !== undefined && taskData.phone}
                 </Typography>
                 <Box sx={{textAlign: 'center', mt: 5}}>
-                    <Button variant="contained" color="primary" size="small" sx={{ mb: 2, mr: 3}} onClick={() => setOpenEditDialog(true)}>Edit</Button>
-                    <Button variant="contained" color="error" size="small" sx={{ mb: 2}} onClick={() => setOpenDeleteDialog(true)}>Delete</Button>
+                    <Button color="primary" size="large" sx={{ mb: 2, mr: 3}} onClick={() => setOpenEditDialog(true)}>Edit</Button>
+                    <Button color="error" size="large" sx={{ mb: 2}} onClick={() => setOpenDeleteDialog(true)}>Delete</Button>
                 </Box>
             </AccordionDetails>
         </Accordion>

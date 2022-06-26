@@ -84,8 +84,8 @@ const FlaggedTaskAccordion = ({taskData, user, flagTask}) => {
                     <b>Contact Phone Number:</b> { taskData !== undefined && taskData.phone}
                 </Typography>
                 <Box sx={{textAlign: 'center', mt: 5}}>
-                    <Button variant="contained" color="primary" size="small" sx={{ mb: 2, mr: 3}} onClick={() => setOpenFlagDialog(true)}>View</Button>
-                    <Button variant="contained" color="error" size="small" sx={{ mb: 2}} onClick={() => flagThisTask(false)}>Unflag</Button>
+                    <Button color="primary" size="large" sx={{ mb: 2, mr: 3}} onClick={() => setOpenFlagDialog(true)}>View</Button>
+                    <Button color="error" size="large" sx={{ mb: 2}} onClick={() => flagThisTask(false)}>Unflag</Button>
                 </Box>
             </AccordionDetails>
         </Accordion>
