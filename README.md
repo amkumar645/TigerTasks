@@ -6,6 +6,7 @@ Create Tasks page, a user can add a task they need done in any capacity, whether
 designing a logo for a personal project, getting tutoring for a difficult class,
 or even a basic need like grocery shopping one weekend. TigerTasks combines
 all these things to make it easier for Princeton students to get tasks done.
+<img width="1440" alt="Screen Shot 2022-06-26 at 9 41 41 AM" src="https://user-images.githubusercontent.com/75765836/175817036-6e172066-4cc8-4aec-bee5-95db50570a10.png">
 
 ## Browsing Tasks
 Once you've logged in with your Princeton email, you see the Browse Tasks section, where
