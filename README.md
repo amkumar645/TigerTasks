@@ -38,3 +38,6 @@ Pressing delete gives you a confirmation dialog, since this cannot be undone.
 <img width="1423" alt="Screen Shot 2022-06-26 at 9 37 41 AM" src="https://user-images.githubusercontent.com/75765836/175816807-457d2e27-adda-439c-bb1c-915c3c1f15cf.png">
 <br>
 If you forget any of these instructions, check out the tutorial page.
+
+
+This project was created by Arnav Kumar using React, Go, and MongoDB.
