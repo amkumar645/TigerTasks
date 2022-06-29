@@ -171,6 +171,27 @@ func GetFlaggedTasksByUser(c *gin.Context) {
 	c.JSON(http.StatusOK, tasks)
 }
 
+// Get all tasks requested by user
+func GetRequestedTasksByUser(c *gin.Context) {
+	user := c.Params.ByName("user")
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	var tasks []bson.M
+	cursor, err := taskCollection.Find(ctx, bson.M{
+		"requestedby": bson.M{"$all": bson.A{user}},
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if err = cursor.All(ctx, &tasks); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer cancel()
+	fmt.Println(tasks)
+	c.JSON(http.StatusOK, tasks)
+}
+
 // Get a task by its ID
 func GetTaskById(c *gin.Context) {
 	taskID := c.Params.ByName("id")
@@ -216,6 +237,7 @@ func UpdateTask(c *gin.Context) {
 			"phone":       task.Phone,
 			"createdby":   task.CreatedBy,
 			"flaggedby":   task.FlaggedBy,
+			"requestedby": task.RequestedBy,
 		},
 	)
 

@@ -4,7 +4,8 @@ import Browse from './components/Tasks/Browse/Browse';
 import Login from './components/Login/Login';
 import MyTasks from './components/Tasks/MyTasks/MyTasks';
 import Tutorial from './components/Tasks/Tutorial/Tutorial';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import RequestedTasks from './components/Tasks/RequestedTasks/RequestedTasks';
 
 function App() {
   const [user, setUser] = useState({
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Browse user={user}/>} />
         <Route path="/mytasks" element={<MyTasks user={user}/>} />
+        <Route path="/wantedtasks" element={<RequestedTasks user={user}/>} />
         <Route path="/tutorial" element={<Tutorial user={user}/>} />
         <Route path="/login" element={<Login setUser={setCurrentUser}/>} />
       </Routes>

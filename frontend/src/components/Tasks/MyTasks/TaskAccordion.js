@@ -3,16 +3,19 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Button, Chip, Dialog, Typography } from "@mui/material";
+import { Box, Button, Dialog, Typography } from "@mui/material";
 import DeleteDialog from './Dialogs/DeleteDialog';
 import EditDialog from './Dialogs/EditDialog';
 import CategoryChip from '../CategoryChip/CategoryChip';
+import RequestDialog from './Dialogs/RequestDialog';
 
 
 const TaskAccordion = ({taskData, deleteSingleTask, formSubmit}) => {
     const [expanded, setExpanded] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openEditDialog, setOpenEditDialog] = useState(false);
+    const [openRequestDialog, setOpenRequestDialog] = useState(false);
+
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -35,7 +38,7 @@ const TaskAccordion = ({taskData, deleteSingleTask, formSubmit}) => {
                     <CategoryChip category={taskData.category}></CategoryChip>
                 </Box>
                 <Typography sx={{ fontFamily: 'Raleway', position: 'absolute', right: '1%', width: '33%' }}>
-                    <b>Created By:&nbsp;</b> { taskData !== undefined && taskData.createdby}                   
+                    <b>Current Requests:&nbsp;</b> { taskData !== undefined && taskData.requestedby.length}                   
                 </Typography>
             </AccordionSummary>
             <hr></hr>
@@ -63,6 +66,7 @@ const TaskAccordion = ({taskData, deleteSingleTask, formSubmit}) => {
                 </Typography>
                 <Box sx={{textAlign: 'center', mt: 5}}>
                     <Button color="primary" size="large" sx={{ mb: 2, mr: 3}} onClick={() => setOpenEditDialog(true)}>Edit</Button>
+                    <Button color="success" size="large" sx={{ mb: 2, mr: 3}} onClick={() => setOpenRequestDialog(true)}>See Requests</Button>
                     <Button color="error" size="large" sx={{ mb: 2}} onClick={() => setOpenDeleteDialog(true)}>Delete</Button>
                 </Box>
             </AccordionDetails>
@@ -72,6 +76,9 @@ const TaskAccordion = ({taskData, deleteSingleTask, formSubmit}) => {
         </Dialog>
         <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} fullWidth maxWidth="lg">
             <EditDialog closeEditDialog={setOpenEditDialog} formSubmit={formSubmit} taskData={taskData}></EditDialog>
+        </Dialog>
+        <Dialog open={openRequestDialog} onClose={() => setOpenRequestDialog(false)} fullWidth maxWidth="lg">
+            <RequestDialog closeRequestDialog={setOpenRequestDialog} taskData={taskData}></RequestDialog>
         </Dialog>
         </>
     );

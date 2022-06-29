@@ -87,6 +87,11 @@ const ResponsiveAppBar = ({user}) => {
                 </NavLink>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink exact="true" activeclassname="active" to="/wantedtasks" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
+                  <Typography textAlign="center" color="black" sx={{ fontFamily: 'Raleway' }}>Wanted Tasks</Typography>
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <NavLink exact="true" activeclassname="active" to="/tutorial" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
                   <Typography textAlign="center" color="black" sx={{ fontFamily: 'Raleway' }}>Tutorial</Typography>
                 </NavLink>
@@ -107,7 +112,15 @@ const ResponsiveAppBar = ({user}) => {
                 onClick={handleCloseNavMenu}
                 sx={{ mt: 2.3, color: 'white', display: 'block', mr: 3, fontFamily: 'Raleway', fontSize: '16px'}}
               >
-                My Tasks
+                Created Tasks
+              </Button>
+            </NavLink>
+            <NavLink exact="true" activeclassname="active" to="/wantedtasks" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ mt: 2.3, color: 'white', display: 'block', mr: 3, fontFamily: 'Raleway', fontSize: '16px'}}
+              >
+                Wanted Tasks
               </Button>
             </NavLink>
             <NavLink exact="true" activeclassname="active" to="/tutorial" onClick={() => handleCloseNavMenu()} style={{textDecoration: 'none'}}>

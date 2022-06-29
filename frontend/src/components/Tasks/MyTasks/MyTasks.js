@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import { Box, Dialog, Typography } from "@mui/material";
 import TaskAccordion from './TaskAccordion.js';
-import FlaggedTaskAccordion from "./FlaggedTaskAccordion";
 import { restURL } from "../../utils/constants";
 import SuccessDialog from "../Dialogs/SuccessDialog";
 import ErrorDialog from "../Dialogs/ErrorDialog";
@@ -13,7 +12,6 @@ import ErrorDialog from "../Dialogs/ErrorDialog";
 const MyTasks = (user) => {
     const [redirect, setRedirect] = useState(false);
     const [createdTasks, setCreatedTasks] = useState([])
-    const [flaggedTasks, setFlaggedTasks] = useState([])
     const [refreshData, setRefreshData] = useState(false)
     const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
     const [openErrorDialog, setOpenErrorDialog] = useState(false);
@@ -28,28 +26,12 @@ const MyTasks = (user) => {
         "email": user.user.email,
         "phone": "",
         "createdby": user.user.netID,
-        "flaggedby": []
+        "flaggedby": [],
+        "requestedby": [],
     };
     var changeTaskId = 0;
 
-    const flagTask = (data, id) => {
-        newTask = {
-            "title": data.title,
-            "description": data.description, 
-            "skills": data.skills, 
-            "category": data.category,
-            "price": data.price,
-            "deadline": data.deadline,
-            "email": data.email,
-            "phone": data.phone,
-            "createdby": data.createdby,
-            "flaggedby": data.flaggedby
-        }
-        changeTaskId = id;
-        changeSingleTask();
-    }
-
-    const formSubmit = (data, id) => {
+    const formSubmit = (data, id, taskData) => {
         newTask = {
             "title": data.title,
             "description": data.description, 
@@ -60,7 +42,8 @@ const MyTasks = (user) => {
             "email": user.user.email,
             "phone": data.phone,
             "createdby": user.user.netID,
-            "flaggedby": []
+            "flaggedby": taskData.flaggedby,
+            "requestedby": taskData.requestedby,
         }
         changeTaskId = id;
         changeSingleTask();
@@ -72,14 +55,12 @@ const MyTasks = (user) => {
             setRedirect(true);
         }
         getAllCreatedTasks();
-        getAllFlaggedTasks();
     }, [])
 
     //refreshes the page
     if(refreshData){
         setRefreshData(false);
         getAllCreatedTasks();
-        getAllFlaggedTasks();
     }
 
     return (
@@ -89,18 +70,9 @@ const MyTasks = (user) => {
             <Typography variant='h3' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50', fontFamily: 'Raleway'}}>
                 Created Tasks
             </Typography>
-            <Box sx={{ml: 5, mr: 5}}>
+            <Box sx={{ml: 5, mr: 5, mb: 3}}>
                 {createdTasks != null && createdTasks.map((task, i) => (
                     <TaskAccordion key={task._id} taskData={task} deleteSingleTask={deleteSingleTask} user={user} formSubmit={formSubmit}/>
-                ))}
-            </Box>
-            
-            <Typography variant='h3' sx={{textAlign: 'center', my: 5, fontWeight:500, color:'#4cad50', fontFamily: 'Raleway'}}>
-                Flagged Tasks
-            </Typography>
-            <Box sx={{ml: 5, mr: 5, mb: 5}}>
-                {flaggedTasks != null && flaggedTasks.map((task, i) => (
-                    <FlaggedTaskAccordion key={task._id} taskData={task} flagTask={flagTask} user={user}/>
                 ))}
             </Box>
             <Dialog open={openSuccessDialog} onClose={() => setOpenSuccessDialog(false)} fullWidth maxWidth="sm">
@@ -120,18 +92,6 @@ const MyTasks = (user) => {
         }).then(response => {
             if(response.status === 200){
                 setCreatedTasks(response.data)
-            }
-        })
-    }
-
-    // Get all the tasks
-    function getAllFlaggedTasks(){
-        var url = restURL + "/users/flagged/" + user.user.netID;
-        axios.get(url, {
-            responseType: 'json'
-        }).then(response => {
-            if(response.status === 200){
-                setFlaggedTasks(response.data)
             }
         })
     }
@@ -175,7 +135,8 @@ const MyTasks = (user) => {
             "email": user.user.email,
             "phone": "",
             "createdby": user.user.netID,
-            "flaggedby": []
+            "flaggedby": [],
+            "requestedby": [],
         };
         changeTaskId = 0;
     }

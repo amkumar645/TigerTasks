@@ -16,4 +16,5 @@ type Task struct {
 	Phone       *string            `json:"phone"`
 	CreatedBy   *string            `json:"createdby"`
 	FlaggedBy   []*string          `json:"flaggedby"`
+	RequestedBy []*string          `json:"requestedby"`
 }

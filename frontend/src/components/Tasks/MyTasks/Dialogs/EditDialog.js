@@ -6,7 +6,7 @@ const EditDialog = ({closeEditDialog, formSubmit, taskData}) => {
     const { handleSubmit, reset, control } = useForm();
 
     const handleOnSubmit = (evt) => {
-        formSubmit(evt, taskData._id);
+        formSubmit(evt, taskData._id, taskData);
         closeEditDialog(false);
     };
 

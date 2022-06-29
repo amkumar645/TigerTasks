@@ -30,7 +30,8 @@ const Browse = (user) => {
         "email": user.user.email,
         "phone": "",
         "createdby": user.user.netID,
-        "flaggedby": []
+        "flaggedby": [],
+        "requestedby": [],
     };
     var changeTaskId = 0;
     
@@ -55,6 +56,7 @@ const Browse = (user) => {
     };
 
     const changeFilterCategory = (event) => {
+        if (tasks === []) return;
         setFilterCategory(event.target.value);
         if (event.target.value === "") {
             if (filterTitle === ""){
@@ -85,7 +87,8 @@ const Browse = (user) => {
             "email": user.user.email,
             "phone": data.phone,
             "createdby": user.user.netID,
-            "flaggedby": []
+            "flaggedby": [],
+            "requestedby": [],
         }
         addSingleTask();
     }
@@ -101,7 +104,26 @@ const Browse = (user) => {
             "email": data.email,
             "phone": data.phone,
             "createdby": data.createdby,
-            "flaggedby": data.flaggedby
+            "flaggedby": data.flaggedby,
+            "requestedby": data.requestedby
+        }
+        changeTaskId = id;
+        changeSingleTask();
+    }
+
+    const requestTask = (data, id) => {
+        newTask = {
+            "title": data.title,
+            "description": data.description, 
+            "skills": data.skills, 
+            "category": data.category,
+            "price": data.price,
+            "deadline": data.deadline,
+            "email": data.email,
+            "phone": data.phone,
+            "createdby": data.createdby,
+            "flaggedby": data.flaggedby,
+            "requestedby": data.requestedby
         }
         changeTaskId = id;
         changeSingleTask();
@@ -168,7 +190,7 @@ const Browse = (user) => {
             <Grid container spacing={2} sx={{ ml:'auto', mr: 'auto'}}>
                 {tasks != null && tasks.map((task) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={task._id}>
-                        <TaskCard taskData={task} flagTask={flagTask} user={user}/>
+                        <TaskCard taskData={task} flagTask={flagTask} requestTask={requestTask} user={user}/>
                     </Grid>
                 ))}
             </Grid>
@@ -201,7 +223,8 @@ const Browse = (user) => {
             "email": user.user.email,
             "phone": "",
             "createdby": user.user.netID,
-            "flaggedby": []
+            "flaggedby": [],
+            "requestedby": [],
         };
         changeTaskId = 0;
     }
@@ -219,7 +242,8 @@ const Browse = (user) => {
             "email": newTask.email,
             "phone": newTask.phone,
             "createdby": newTask.createdby,
-            "flaggedby": []
+            "flaggedby": [],
+            "requestedby": []
         }).then(response => {
             if(response.status === 200){
                 setRefreshData(true);
@@ -239,7 +263,8 @@ const Browse = (user) => {
             "email": user.user.email,
             "phone": "",
             "createdby": user.user.netID,
-            "flaggedby": []
+            "flaggedby": [],
+            "requestedby": []
         };
     }
 

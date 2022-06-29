@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState } from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Box, Button, Chip, Dialog, Grid, IconButton } from '@mui/material';
+import { Box, Button, Dialog, IconButton } from '@mui/material';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 import CategoryChip from '../CategoryChip/CategoryChip';
-import ViewDialog from '../MyTasks/Dialogs/ViewDialog';
+import RequestViewDialog from '../MyTasks/Dialogs/RequestViewDialog';
 
-const TaskCard = ({taskData, user, flagTask}) => {
+const TaskCard = ({taskData, user, flagTask, requestTask}) => {
     const [flagged, setFlagged] = useState(taskData.flaggedby.includes(user.user.netID));
     const [openViewDialog, setOpenViewDialog] = useState(false);
 
@@ -28,7 +27,8 @@ const TaskCard = ({taskData, user, flagTask}) => {
                 "email": taskData.email,
                 "phone": taskData.phone,
                 "createdby": taskData.createdby,
-                "flaggedby": newFlaggedBy
+                "flaggedby": newFlaggedBy,
+                "requestedby": taskData.requestedby
             }
             flagTask(data, taskData._id);
         }
@@ -48,7 +48,8 @@ const TaskCard = ({taskData, user, flagTask}) => {
                 "email": taskData.email,
                 "phone": taskData.phone,
                 "createdby": taskData.createdby,
-                "flaggedby": newFlaggedBy
+                "flaggedby": newFlaggedBy,
+                "requestedby": taskData.requestedby
             }
             flagTask(data, taskData._id);
         }
@@ -101,7 +102,7 @@ const TaskCard = ({taskData, user, flagTask}) => {
             </CardContent>
         </Card>
         <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
-            <ViewDialog taskData={taskData} closeViewDialog={setOpenViewDialog}></ViewDialog>
+            <RequestViewDialog taskData={taskData} closeViewDialog={setOpenViewDialog} user={user} requestTask={requestTask}></RequestViewDialog>
         </Dialog>
         </>
     );

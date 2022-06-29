@@ -55,16 +55,26 @@ const Tutorial = (user) => {
                         section.
                     </Typography>
                     <Typography sx={{mt: 2, ml: 10, mr: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
-                        5. In the Flagged Tasks section, you can view the task
+                        5. In the Wanted Tasks section, you can view all flagged tasks
+                        in a larger popup or unflag the task. Note that you can also
+                        unflag the task by clicking on the flag on the top right
+                        in the "Browse Tasks" section. 
+                    </Typography>
+                    <Typography sx={{mt: 2, ml: 10, mr: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
+                        6. If you want to let the creator of a task know your interest,
+                        you can request a task. To do this, press the SEE MORE button and 
+                        scroll to the bottom of the card. Then, there is a REQUEST button.
+                    </Typography>
+                    <Typography sx={{mt: 2, ml: 10, mr: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
+                        7. In the Wanted Tasks section, you can view all requested task
                         in a larger popup or unflag the task. Note that you can also
                         unflag the task by clicking on the flag on the top right
                         in the "Browse Tasks" section. 
                     </Typography>
                     <Typography sx={{mt: 2, ml: 10, mr: 10, mb: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
-                        6. This website does not support assignment or payment for
+                        8. This website does not support payment for
                         task completion yet, so if you want to do a task for someone,
-                        use the contact info shown with the task to set up request
-                        and payment. Good luck!
+                        use the contact info shown with the task to set up payment. Good luck!
                     </Typography>
                 </TabPanel>
                 <TabPanel>
@@ -93,8 +103,12 @@ const Tutorial = (user) => {
                         the details. You can change any of the details on a task, but I 
                         don't recommend overusing this. 
                     </Typography>
+                    <Typography sx={{mt: 2, ml: 10, mr: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
+                        6. In addition, you can see all the requests to do your task 
+                        by clicking on SEE REQUESTS. 
+                    </Typography>
                     <Typography sx={{mt: 2, ml: 10, mr: 10, mb: 10, fontWeight:500, fontFamily: 'Raleway', fontSize: '20px'}}>
-                        6. Once your task is completed or if you no longer wish to 
+                        7. Once your task is completed or if you no longer wish to 
                         have the task be posted, you can delete the task. You will
                         have to confirm the deletion to make sure you don't delete tasks
                         by accident, but be careful, as once a task is deleted, it can 

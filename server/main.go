@@ -28,6 +28,7 @@ func main() {
 	//Read
 	router.GET("/users/created/:user", routes.GetCreatedTasksByUser)
 	router.GET("/users/flagged/:user", routes.GetFlaggedTasksByUser)
+	router.GET("/users/requested/:user", routes.GetRequestedTasksByUser)
 	router.GET("/tasks", routes.GetTasks)
 	router.GET("/task/:id/", routes.GetTaskById)
 	router.GET("/tasks/category/:category/", routes.GetTasksByCategory)
